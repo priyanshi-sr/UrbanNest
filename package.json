@@ -1,0 +1,30 @@
+{
+  "name": "urbannest",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/priyanshi-sr/UrbanNest#readme",
+  "bugs": {
+    "url": "https://github.com/priyanshi-sr/UrbanNest/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/priyanshi-sr/UrbanNest.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd api && npm run start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.4",
+    "nodemon": "^3.1.9"
+  }
+}
