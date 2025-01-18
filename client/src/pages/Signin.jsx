@@ -10,7 +10,7 @@ import {signInFailure} from "../redux/user/userSlice.js";
 const SignIn = () => {
     // We want to track changes to the form inputs and update the state accordingly
     const[formData,setFormData]= useState({});
-    const {loading, error} = useSelector((state)=>state.user);
+    const { loading, error } = useSelector((state) => state.user ?? {});
     const navigate=useNavigate();
     const dispatch=useDispatch();
     const handleChange = (e)=>{
