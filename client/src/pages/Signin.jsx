@@ -1,14 +1,18 @@
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {signInStart} from "../redux/user/userSlice.js";
+import {signInSuccess} from "../redux/user/userSlice.js";
+import {signInFailure} from "../redux/user/userSlice.js";
 
 
 
 const SignIn = () => {
     // We want to track changes to the form inputs and update the state accordingly
     const[formData,setFormData]= useState({});
-    const [error,setError]=useState(null);
-    const [loading,setLoading]=useState(false);
+    const {loading, error} = useSelector((state)=>state.user);
     const navigate=useNavigate();
+    const dispatch=useDispatch();
     const handleChange = (e)=>{
         setFormData({...formData,  // Keep the existing form data
             [e.target.id]: e.target.value});  // Update the value of the specific field that changed
@@ -18,7 +22,7 @@ const SignIn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault(); // to prevent refreshing the page
         try {
-            setLoading(true);
+            dispatch(signInStart)
             const res = await fetch('/api/auth/signin',
                 {
                     method: 'POST',
@@ -29,17 +33,15 @@ const SignIn = () => {
                 })
             const data = await res.json();
             if(data.success === false){
-                setLoading(false);
-                setError(data.message);
+                dispatch(signInFailure(data.message));
+
                 return;
             }
-            setLoading(false);
-            setError(null);
+            dispatch(signInSuccess(data));
             navigate('/')
         }
         catch(error){
-            setLoading(false);
-            setError(error.message);
+           dispatch(signInFailure(error.message))
         }
 
     }
