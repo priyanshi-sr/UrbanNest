@@ -20,7 +20,7 @@ app.use(express.json()); //allow json as input of the server
 
 //Routes
 app.use('/api/user/', userRouter);
-app.use('/api/auth', authRouter);
+app.use('/api/auth/', authRouter);
 //error handling Middleware
 app.use((err,req,res,next)=>{
     const statusCode = err.status || 500;
