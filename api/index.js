@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import userRouter from './routes/user.route.js'
 import authRouter from './routes/auth.route.js'
+import cookieParser from 'cookie-parser'
+
 dotenv.config()
 
 mongoose
@@ -16,7 +18,10 @@ mongoose
 
 
 const app = express()
+
 app.use(express.json()); //allow json as input of the server
+
+app.use(cookieParser());
 
 //Routes
 app.use('/api/user/', userRouter);
