@@ -1,6 +1,12 @@
 import {useSelector} from "react-redux";
 import {useState} from "react";
-import {updateUserStart , updateUserSuccess , updateUserFailure} from "../redux/user/userSlice.js";
+import {
+    updateUserStart,
+    updateUserSuccess,
+    updateUserFailure,
+    deleteUserSuccess,
+    deleteUserFailure, deleteUserStart
+} from "../redux/user/userSlice.js";
 import {useDispatch} from "react-redux";
 
 const Profile = () => {
@@ -40,6 +46,23 @@ const Profile = () => {
         }
     };
 
+    const handleDeleteUser = async () => {
+        try {
+            dispatch(deleteUserStart());
+            const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if (data.success === false) {
+                dispatch(deleteUserFailure(data.message));
+                return;
+            }
+            dispatch(deleteUserSuccess(data));
+        } catch (error) {
+            dispatch(deleteUserFailure(error.message));
+        }
+    };
+
     return (
         <div className='p-3 mx-w-lg mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
@@ -52,7 +75,7 @@ const Profile = () => {
 
             </form>
             <div className='flex justify-between mt-5'>
-                <span className='text-red-700 cursor-pointer'>Delete Account</span>
+                <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
                 <span className='text-red-700 cursor-pointer'>Sign Out</span>
             </div>
             <p className='text-red-700 mt-5'>{error ? error : ' '}</p>
