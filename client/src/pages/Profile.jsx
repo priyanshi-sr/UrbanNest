@@ -8,7 +8,7 @@ import {
     deleteUserFailure, deleteUserStart, SignOutUserStart
 } from "../redux/user/userSlice.js";
 import {useDispatch} from "react-redux";
-import {signOut} from "@firebase/auth";
+
 
 const Profile = () => {
 
