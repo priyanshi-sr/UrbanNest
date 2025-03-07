@@ -6,6 +6,7 @@ import {Navigation} from 'swiper/modules'
 import 'swiper/css/bundle';
 import {FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare} from "react-icons/fa";
 import {useSelector} from "react-redux";
+import Contact from "../components/Contact.jsx";
 
 const Listing = () => {
     SwiperCore.use([Navigation]);
@@ -39,7 +40,11 @@ const Listing = () => {
             }
         };
         fetchListing();
-    }, [params.listingId]);
+    }, [params.listingId])
+
+    useEffect(() => {
+        console.log(listing)
+    }, [listing]);
 
 
     return(
@@ -53,13 +58,7 @@ const Listing = () => {
                     <Swiper navigation>
                         {listing.imageUrls.map((url) => (
                                 <SwiperSlide key={url}>
-                                    <div
-                                        className='h-[550px]'
-                                        style={{
-                                            background: `url(${url}) center no-repeat`,
-                                            backgroundSize: 'cover',
-                                        }}
-                                    ></div>
+                                    <img src={url} className={'h-[550px] w-full'}/>
                                 </SwiperSlide>
                             )
                         )}
@@ -103,7 +102,7 @@ const Listing = () => {
                                     ${+listing.regularPrice - +listing.discountPrice} OFF
                                 </p>
                             )}
-                        </div>
+                         </div>
                         <p className='text-slate-800'>
                             <span className='font-semibold text-black'>Description - </span>
                             {listing.description}
@@ -131,14 +130,11 @@ const Listing = () => {
                             </li>
                         </ul>
                         {currentUser && listing.userRef !== currentUser._id && !contact && (
-                            <button
-                                onClick={() => setContact(true)}
-                                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
-                            >
-                                Contact landlord
-                            </button>
+                            <button onClick={()=> setContact(true)} className='bg-blue-700 text-white rounded-lg uppercase hover:opacity-95 p-3'>Contact
+                                Landlord</button>
                         )}
-                        {contact && <Contact listing={listing} />}
+                        {contact && <Contact listing={listing}/>}
+
                     </div>
                 </div>
             )}
