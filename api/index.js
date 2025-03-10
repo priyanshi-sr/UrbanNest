@@ -6,6 +6,7 @@ import authRouter from './routes/auth.route.js'
 import cookieParser from 'cookie-parser'
 import listingRouter from './routes/listing.route.js';
 import uploadRouter from './routes/upload.route.js';
+import path from 'path';
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ mongoose
         console.error('Error connecting to MongoDB:', err);
     });
 
+const __dirname =  path.resolve()
 
 const app = express()
 
@@ -31,6 +33,10 @@ app.use('/api/user/', userRouter);
 app.use('/api/auth/', authRouter);
 app.use('/api/listing/', listingRouter);
 app.use('/api/uploads/', uploadRouter)
+app.use(express.static(path.join(__dirname, '/client/dist')))
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client','dist','index.html'))
+ })
 //error handling Middleware
 app.use((err,req,res,next)=>{
     const statusCode = err.status || 500;
