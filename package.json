@@ -18,7 +18,7 @@
     "client": "cd client && npm run dev",
     "server": "cd api && nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"cd api && npm i && nodemon index.js\" \"cd client && npm i && npm run dev\"",
     "dev": "cd api && nodemon index.js",
     "build": "npm install && cd client && npm run build"
   },
